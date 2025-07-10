@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-import numpy as np
-import gymnasium as gym
-from dataclasses import dataclass
+import time
 import typing as tt
-from torch.utils.tensorboard.writer import SummaryWriter
+from dataclasses import dataclass
 
+import gymnasium as gym
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-
+from torch.utils.tensorboard.writer import SummaryWriter
 
 HIDDEN_SIZE = 128
 BATCH_SIZE = 16
@@ -86,7 +86,9 @@ def filter_batch(batch: tt.List[Episode], percentile: float) -> \
 
 
 if __name__ == "__main__":
-    env = gym.make("CartPole-v1")
+    start_time = time.time()
+    env = gym.make("CartPole-v1", render_mode="rgb_array")
+    # env = gym.wrappers.RecordVideo(env, video_folder="video")
     assert env.observation_space.shape is not None
     obs_size = env.observation_space.shape[0]
     assert isinstance(env.action_space, gym.spaces.Discrete)
@@ -112,5 +114,6 @@ if __name__ == "__main__":
         writer.add_scalar("reward_mean", reward_m, iter_no)
         if reward_m > 475:
             print("Solved!")
+            print("Time: %.2f" % (time.time() - start_time))
             break
     writer.close()

@@ -7,9 +7,13 @@ if __name__ == "__main__":
     total_steps = 0
     obs, _ = env.reset()
 
+    print("First observation: " + str(obs))
+
     while True:
         action = env.action_space.sample()
         obs, reward, is_done, is_trunc, _ = env.step(action)
+        print(f"Observation: {obs}, Reward: {reward}, Done: {is_done}, Truncated: {is_trunc}")
+        
         total_reward += reward
         total_steps += 1
         if is_done:

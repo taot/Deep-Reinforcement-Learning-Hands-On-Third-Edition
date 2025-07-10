@@ -1,10 +1,11 @@
 import gymnasium as gym
+from time import sleep
 
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1", render_mode="rgb_array")
-    env = gym.wrappers.HumanRendering(env)
-    # env = gym.wrappers.RecordVideo(env, video_folder="video")
+    # env = gym.wrappers.HumanRendering(env)
+    env = gym.wrappers.RecordVideo(env, video_folder="video")
 
     total_reward = 0.0
     total_steps = 0
@@ -19,4 +20,6 @@ if __name__ == "__main__":
             break
 
     print(f"Episode done in {total_steps} steps, total reward {total_reward:.2f}")
+    # sleep(10)
     env.close()
+    

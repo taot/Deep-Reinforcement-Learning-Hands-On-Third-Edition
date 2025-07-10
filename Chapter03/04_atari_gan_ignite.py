@@ -197,6 +197,7 @@ if __name__ == "__main__":
     timer = Timer()
     timer.attach(engine)
 
+
     @engine.on(Events.ITERATION_COMPLETED)
     def log_losses(trainer):
         if trainer.state.iteration % REPORT_EVERY_ITER == 0:
